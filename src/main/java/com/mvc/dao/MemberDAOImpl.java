@@ -15,7 +15,7 @@ public class MemberDAOImpl implements MemberDAO {
     SqlSession sqlSession;
 
     private static final String NAMESPACE =
-            "members.tutorial.MemberMapper";
+            "com.test.MapperTest";
 
 
     @Override

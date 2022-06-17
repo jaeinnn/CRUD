@@ -1,5 +1,7 @@
 package com.mvc.controller;
 
+import com.mvc.commons.paging.Criteria;
+import com.mvc.commons.paging.PageMaker;
 import com.mvc.domain.ArticleVO;
 import com.mvc.service.ArticleService;
 import org.slf4j.Logger;
@@ -100,4 +102,24 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
+    @RequestMapping(value="/listCriteria",method=RequestMethod.GET)
+    public String listCriteria(Model model, Criteria criteria) throws Exception{
+        logger.info("listCriteria...");
+        model.addAttribute("articles",articleService.listCriteria(criteria));
+        return "/article/list_criteria";
+    }
+
+    @RequestMapping(value="/listPaging", method=RequestMethod.GET)
+    public String listPaing(Model model, Criteria criteria) throws Exception{
+        logger.info("listPaging...");
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(articleService.countArticles(criteria));
+
+        model.addAttribute("articles",articleService.listCriteria(criteria));
+        model.addAttribute("pageMaker",pageMaker);
+
+        return "/article/list_paging";
+    }
 }

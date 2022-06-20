@@ -14,10 +14,19 @@ public class PageMaker {
     public void setCriteria(Criteria criteria) {
         this.criteria = criteria; 
     }
-    
+
+
+    public Criteria getCriteria() {
+        return criteria;
+    }
+
     public void setTotalCount(int totalCount){
         this.totalCount = totalCount; 
         calcData(); 
+    }
+
+    public int getTotalCount() {
+        return totalCount;
     }
 
     private void calcData() {

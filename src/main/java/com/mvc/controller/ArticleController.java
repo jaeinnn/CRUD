@@ -104,13 +104,15 @@ public class ArticleController {
 
     @RequestMapping(value="/listCriteria",method=RequestMethod.GET)
     public String listCriteria(Model model, Criteria criteria) throws Exception{
+
         logger.info("listCriteria...");
         model.addAttribute("articles",articleService.listCriteria(criteria));
+
         return "/article/list_criteria";
     }
 
     @RequestMapping(value="/listPaging", method=RequestMethod.GET)
-    public String listPaing(Model model, Criteria criteria) throws Exception{
+    public String listPaging(Model model, Criteria criteria) throws Exception{
         logger.info("listPaging...");
 
         PageMaker pageMaker = new PageMaker();

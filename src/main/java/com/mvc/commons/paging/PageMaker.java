@@ -1,5 +1,8 @@
 package com.mvc.commons.paging;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
     
     private int totalCount;
@@ -85,5 +88,15 @@ public class PageMaker {
         prev = startPage == 1 ? false : true;
 
         next = endPage * criteria.getPerPageNum() >= totalCount ? false : true;
+    }
+
+    //URI 자동으로 생성하도록 처리하기
+    public String makeQuery(int page){
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page",page)
+                .queryParam("perPageNum", criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
     }
 }

@@ -49,13 +49,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <p class="card-text">
                                     메인 페이지 내용 작성하기
                                 </p>
-
                                 <a href="#" class="card-link">링크1</a>
                                 <a href="#" class="card-link">링크2</a>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

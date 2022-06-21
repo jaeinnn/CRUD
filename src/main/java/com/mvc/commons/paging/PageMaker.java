@@ -9,8 +9,48 @@ public class PageMaker {
     private boolean next; 
     
     private int displayPageNum = 10; 
-    private Criteria criteria; 
-    
+    private Criteria criteria;
+
+    public void setStartPage(int startPage) {
+        this.startPage = startPage;
+    }
+
+    public void setEndPage(int endPage) {
+        this.endPage = endPage;
+    }
+
+    public int getStartPage() {
+        return startPage;
+    }
+
+    public int getEndPage() {
+        return endPage;
+    }
+
+    public int getDisplayPageNum() {
+        return displayPageNum;
+    }
+
+    public void setDisplayPageNum(int displayPageNum) {
+        this.displayPageNum = displayPageNum;
+    }
+
+    public void setPrev(boolean prev) {
+        this.prev = prev;
+    }
+
+    public void setNext(boolean next) {
+        this.next = next;
+    }
+
+    public boolean isPrev() {
+        return prev;
+    }
+
+    public boolean isNext() {
+        return next;
+    }
+
     public void setCriteria(Criteria criteria) {
         this.criteria = criteria; 
     }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -67,6 +68,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="box-footer">
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <c:if test="${pageMaker.prev}">
+                                        <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
+                                    </c:if>
+                                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                                        <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
+                                            <a href="${path}/article/listPaging?page=${idx}">${idx}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                        <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>
+                                    </c:if>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div class="box-footer">
                             <div class="pull-right">
                                 <button type="button" onclick="location.href='${path}/article/write';" class="btn btn-success btn-flat" id="writeBtn">
@@ -81,24 +101,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-    <div class="box-footer">
-        <div class="text-center">
-            <ul class="pagination">
-                <c:if test="${pageMaker.prev}">
-                    <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
-                </c:if>
-                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                    <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                        <a href="${path}/article/listPaging?page=${idx}">${idx}</a>
-                    </li>
-                </c:forEach>
-                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                    <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>
-                </c:if>
-            </ul>
-        </div>
-    </div>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

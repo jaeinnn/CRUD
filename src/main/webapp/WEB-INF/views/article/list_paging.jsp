@@ -84,13 +84,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </c:forEach>
                                     <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                        <%-- <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li> --%>
-                                        <li><a href="${path}/article/listPaging?${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a></li>
+                                        <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a></li>
                                     </c:if>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="box-footer">
+                            <form role="form" method="post">
+                                <input type="hidden" name="articleNo" value="${article.articleNo}">
+                                <input type="hidden" name="page" value="${criteria.page}">
+                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                            </form>
                             <div class="pull-right">
                                 <button type="button" onclick="location.href='${path}/article/write';" class="btn btn-success btn-flat" id="writeBtn">
                                     <i class="fa fa-pencil"></i> 글쓰기

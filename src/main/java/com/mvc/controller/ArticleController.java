@@ -48,7 +48,7 @@ public class ArticleController {
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg","regSuccess");
 
-        return "redirect:/article/list";
+        return "redirect:/article/listPaging";
     }
 
     //목록 페이지 이동
@@ -172,6 +172,7 @@ public class ArticleController {
         return "/article/list_criteria";
     }
 
+    /*
     @RequestMapping(value="/listPaging", method=RequestMethod.GET)
     public String listPaging(Model model, Criteria criteria) throws Exception{
         logger.info("listPaging...");
@@ -185,4 +186,24 @@ public class ArticleController {
 
         return "/article/list_paging";
     }
+     */
+
+    @RequestMapping(value="/listPaging", method=RequestMethod.GET)
+    public String listPaging(Model model, Criteria criteria, RedirectAttributes redirectAttributes) throws Exception{
+        logger.info("listPaging...");
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(articleService.countArticles(criteria));
+
+        model.addAttribute("articles",articleService.listCriteria(criteria));
+        model.addAttribute("pageMaker",pageMaker);
+
+        redirectAttributes.addAttribute("page",criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum",criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg","delSuccess");
+
+        return "/article/list_paging";
+    }
+
 }

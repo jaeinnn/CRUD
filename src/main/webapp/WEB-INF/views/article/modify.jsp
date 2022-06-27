@@ -68,8 +68,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <!--<button type="button" onclick="location.href='${path}/article/listPaging';" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button> -->
                                 <div class="pull-right">
                                     <input type="hidden" name="articleNo" value="${article.articleNo}">
-                                    <input type="hidden" name="page" value="${criteria.page}">
-                                    <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                                    <input type="hidden" name="page" value="${searchCriteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                                    <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                                    <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                                     <button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
                                 </div>
                             </div>
@@ -77,8 +79,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </form>
 
                     <form action="${path}/article/listPaging" method="get" ><button type="submit"  class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
-                        <input type="hidden" name="page" value="${criteria.page}">
-                        <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                        <input type="hidden" name="articleNo" value="${article.articleNo}">
+                        <input type="hidden" name="page" value="${searchCriteria.page}">
+                        <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                        <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                        <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                     </form>
 
                 </div>

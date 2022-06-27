@@ -63,19 +63,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <!--<button type="button" onclick="location.href='${path}/article/listPaging';" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button> -->
                             <form action="${path}/article/listPaging?articleNo=${article.articleNo}" method="get" ><button type="submit"  class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
-                                <input type="hidden" name="page" value="${criteria.page}">
-                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                                <input type="hidden" name="page" value="${searchCriteria.page}">
+                                <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                                <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                                <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
+
                             </form>
                             <div class="pull-right">
                             <!--<button type="button" onclick="location.href='${path}/article/modify?articleNo=${article.articleNo}';" class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>-->
                                 <form action="${path}/article/modify?articleNo=${article.articleNo}" method="get" ><button type="submit"  class="btn btn-warning modBtn"><i class="fa fa-edit"></i> 수정</button>
                                     <input type="hidden" name="articleNo" value="${article.articleNo}">
-                                    <input type="hidden" name="page" value="${criteria.page}">
-                                    <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                              <!--      <input type="hidden" name="page" value="${criteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${criteria.perPageNum}"> -->
+                                    <input type="hidden" name="page" value="${searchCriteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                                    <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                                    <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
+
                                 </form>
                                 <form action="${path}/article/remove?articleNo=${article.articleNo}" method="post" ><button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
-                                    <input type="hidden" name="page" value="${criteria.page}">
-                                    <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                              <!--      <input type="hidden" name="page" value="${criteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${criteria.perPageNum}"> -->
+                                    <input type="hidden" name="articleNo" value="${article.articleNo}">
+                                    <input type="hidden" name="page" value="${searchCriteria.page}">
+                                    <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                                    <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                                    <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                                 </form>
                             </div>
                         </div>

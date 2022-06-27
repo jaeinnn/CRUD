@@ -1,6 +1,7 @@
 package com.mvc.dao;
 
 import com.mvc.commons.paging.Criteria;
+import com.mvc.commons.paging.SearchCriteria;
 import com.mvc.domain.ArticleVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -64,5 +65,15 @@ public class ArticleDAOImpl implements ArticleDAO{
     @Override
     public int countArticles(Criteria criteria) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".countArticles",criteria);
+    }
+
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listSearch", searchCriteria);
+    }
+
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countSearchedArticles", searchCriteria);
     }
 }

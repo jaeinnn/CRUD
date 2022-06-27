@@ -2,6 +2,7 @@ package com.mvc.controller;
 
 import com.mvc.commons.paging.Criteria;
 import com.mvc.commons.paging.PageMaker;
+import com.mvc.commons.paging.SearchCriteria;
 import com.mvc.domain.ArticleVO;
 import com.mvc.service.ArticleService;
 import org.slf4j.Logger;
@@ -76,6 +77,7 @@ public class ArticleController {
      */
 
 
+    /*
     //조회 페이지 이동(+목록페이지 정보 유지)
     @RequestMapping(value="/read", method=RequestMethod.GET)
     public String read(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception{
@@ -84,6 +86,16 @@ public class ArticleController {
             return "/article/read";
     }
 
+     */
+
+    //조회 페이지 이동(+목록페이지 정보 유지) + 게시글 검색정보 유지
+    @RequestMapping(value="/read", method=RequestMethod.GET)
+    public String read(@RequestParam("articleNo") int articleNo, @ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model) throws Exception{
+
+        logger.info("search read() called...");
+        model.addAttribute("article",articleService.read(articleNo));
+        return "/article/read";
+    }
 
 /*
     //수정 페이지 이동
@@ -97,6 +109,8 @@ public class ArticleController {
     }
 
  */
+
+    /*
     //수정페이지 이동(+목록페이지 정보 유지)
     @RequestMapping(value="/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("articleNo") int articleNo, @ModelAttribute("criteria") Criteria criteria, Model model) throws Exception{
@@ -105,7 +119,21 @@ public class ArticleController {
         model.addAttribute("article",articleService.read(articleNo));
 
     return "/article/modify";
-}
+        }
+
+     */
+
+
+    //수정페이지 이동(+목록페이지 정보 유지) + 게시글 검색정보 유지
+    @RequestMapping(value="/modify", method = RequestMethod.GET)
+    public String modifyGET(@RequestParam("articleNo") int articleNo, @ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model) throws Exception{
+
+        logger.info("modifyGet ...");
+        logger.info(searchCriteria.toString());
+        model.addAttribute("article",articleService.read(articleNo));
+
+        return "/article/modify";
+    }
 
 
 /*
@@ -122,6 +150,7 @@ public class ArticleController {
 
  */
 
+    /*
     //수정 처리(+목록페이지 정보 유지)
     @RequestMapping(value="/modify", method=RequestMethod.POST)
     public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes redirectAttributes) throws Exception{
@@ -134,6 +163,25 @@ public class ArticleController {
 
         return "redirect:/article/listPaging";
     }
+
+     */
+
+
+    //수정 처리(+목록페이지 정보 유지) + 게시글 검색정보 유지
+    @RequestMapping(value="/modify", method=RequestMethod.POST)
+    public String modifyPOST(ArticleVO articleVO, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes) throws Exception{
+
+        logger.info("modifyPOST ...");
+        articleService.update(articleVO);
+        redirectAttributes.addAttribute("page",searchCriteria.getPage());
+        redirectAttributes.addAttribute("perPageNum",searchCriteria.getPerPageNum());
+        redirectAttributes.addAttribute("searchType",searchCriteria.getSearchType());
+        redirectAttributes.addAttribute("keyword",searchCriteria.getKeyword());
+        redirectAttributes.addFlashAttribute("msg","modSuccess");
+
+        return "redirect:/article/listPaging";
+    }
+
 
     /*
     //삭제 처리
@@ -149,6 +197,7 @@ public class ArticleController {
 
      */
 
+    /*
     //삭제 처리(+목록페이지 정보 유지)
     @RequestMapping(value="/remove", method=RequestMethod.POST)
     public String remove(@RequestParam("articleNo") int articleNo, Criteria criteria, RedirectAttributes redirectAttributes) throws Exception{
@@ -162,6 +211,25 @@ public class ArticleController {
         return "redirect:/article/listPaging";
     }
 
+     */
+
+
+    //삭제 처리(+목록페이지 정보 유지) + 게시글 검색정보 유지
+    @RequestMapping(value="/remove", method=RequestMethod.POST)
+    public String remove(@RequestParam("articleNo") int articleNo, SearchCriteria searchCriteria, Criteria criteria, RedirectAttributes redirectAttributes) throws Exception{
+
+        logger.info("remove ...");
+        articleService.delete(articleNo);
+        redirectAttributes.addAttribute("page",searchCriteria.getPage());
+        redirectAttributes.addAttribute("perPageNum",searchCriteria.getPerPageNum());
+        redirectAttributes.addAttribute("searchType",searchCriteria.getSearchType());
+        redirectAttributes.addAttribute("keyword",searchCriteria.getKeyword());
+        redirectAttributes.addFlashAttribute("msg","delSuccess");
+
+        return "redirect:/article/listPaging";
+    }
+
+
 
     @RequestMapping(value="/listCriteria",method=RequestMethod.GET)
     public String listCriteria(Model model, Criteria criteria) throws Exception{
@@ -173,6 +241,7 @@ public class ArticleController {
     }
 
     /*
+   //페이징처리 구현
     @RequestMapping(value="/listPaging", method=RequestMethod.GET)
     public String listPaging(Model model, Criteria criteria) throws Exception{
         logger.info("listPaging...");
@@ -188,6 +257,8 @@ public class ArticleController {
     }
      */
 
+    /*
+    //페이징처리 구현+하단 페이지
     @RequestMapping(value="/listPaging", method=RequestMethod.GET)
     public String listPaging(Model model, Criteria criteria, RedirectAttributes redirectAttributes) throws Exception{
         logger.info("listPaging...");
@@ -201,6 +272,28 @@ public class ArticleController {
 
         redirectAttributes.addAttribute("page",criteria.getPage());
         redirectAttributes.addAttribute("perPageNum",criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg","delSuccess");
+
+        return "/article/list_paging";
+    }
+     */
+
+    //페이징처리 구현+하단 페이지+검색
+    @RequestMapping(value="/listPaging", method=RequestMethod.GET)
+    public String listPaging(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria, Model model, RedirectAttributes redirectAttributes) throws Exception{
+        logger.info("search listPaging...");
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(searchCriteria);
+       // pageMaker.setTotalCount(articleService.countArticles(searchCriteria));
+        pageMaker.setTotalCount(articleService.countSearchedArticles(searchCriteria));
+
+        //model.addAttribute("articles",articleService.listCriteria(searchCriteria));
+        model.addAttribute("articles",articleService.listSearch(searchCriteria));
+        model.addAttribute("pageMaker",pageMaker);
+
+        redirectAttributes.addAttribute("page",searchCriteria.getPage());
+        redirectAttributes.addAttribute("perPageNum",searchCriteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg","delSuccess");
 
         return "/article/list_paging";

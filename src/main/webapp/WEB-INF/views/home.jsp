@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <%@ include file="include/head.jsp"%>
     
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%@ include file="include/main_header.jsp"%>

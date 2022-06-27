@@ -1,6 +1,7 @@
 package com.mvc.dao;
 
 import com.mvc.commons.paging.Criteria;
+import com.mvc.commons.paging.SearchCriteria;
 import com.mvc.domain.ArticleVO;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface ArticleDAO {
     List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 
     int countArticles(Criteria criteria) throws Exception;
+
+    List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception;
+    int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
 
 
 }

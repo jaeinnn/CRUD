@@ -6,6 +6,7 @@
 
     <typeAliases>
         <typeAlias type="com.mvc.domain.ArticleVO" alias="ArticleVO"/>
+        <typeAlias type="com.mvc.reply.domain.ReplyVO" alias="ReplyVO"/>
     </typeAliases>
 
 </configuration>

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReplyService {
 
-    List<ReplyVO> list(Integer articleNo) throws Exception;
+    List<ReplyVO> listReply(Integer articleNo) throws Exception;
     void addReply(ReplyVO replyVO) throws Exception;
     void modifyReply(ReplyVO replyVO) throws Exception;
     void removeReply(Integer replyNo) throws Exception;

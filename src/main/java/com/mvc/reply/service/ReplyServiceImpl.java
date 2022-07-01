@@ -19,7 +19,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyVO> list(Integer articleNo) throws Exception {
+    public List<ReplyVO> listReply(Integer articleNo) throws Exception {
         return replyDAO.list(articleNo);
     }
 

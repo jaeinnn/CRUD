@@ -38,6 +38,18 @@ public class ReplyController {
         return entity;
     }
 
+    @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
+    public ResponseEntity<List<ReplyVO>> list(@PathVariable("articleNo") Integer articleNo) {
+        ResponseEntity<List<ReplyVO>> entity = null;
+        try {
+            entity = new ResponseEntity<>(replyService.listReply(articleNo), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
     @RequestMapping(value = "/{replyNo}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> update(@PathVariable("replyNo") Integer replyNo, @RequestBody ReplyVO replyVO) {
         ResponseEntity<String> entity = null;
@@ -64,52 +76,5 @@ public class ReplyController {
         }
         return entity;
     }
-
-    @RequestMapping(value = "/{articleNo}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("articleNo") Integer articleNo,
-                                                          @PathVariable("page") Integer page) {
-
-        ResponseEntity<Map<String, Object>> entity = null;
-
-        try {
-
-            Criteria criteria = new Criteria();
-            criteria.setPage(page);
-
-            List<ReplyVO> replies = replyService.getRepliesPaging(articleNo, criteria);
-            int repliesCount = replyService.countReplies(articleNo);
-
-            PageMaker pageMaker = new PageMaker();
-            pageMaker.setCriteria(criteria);
-            pageMaker.setTotalCount(repliesCount);
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("replies", replies);
-            map.put("pageMake", pageMaker);
-
-            entity = new ResponseEntity<>(map, HttpStatus.OK);
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.OK);
-
-        }
-
-        return entity;
-    }
-
-
-    @Controller
-    @RequestMapping("/reply")
-    public class ReplyTestController {
-
-        @RequestMapping("/test")
-        public String replyAjaxTest() {
-            return "/tutorial/reply_test";
-        }
-
-    }
-
 }
 

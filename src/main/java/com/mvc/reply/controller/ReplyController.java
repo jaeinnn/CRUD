@@ -76,5 +76,43 @@ public class ReplyController {
         }
         return entity;
     }
+
+
+
+    @RequestMapping(value = "/{articleNo}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("articleNo") Integer articleNo,
+                                                          @PathVariable("page") Integer page) {
+
+        ResponseEntity<Map<String, Object>> entity = null;
+
+        try {
+
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
+
+            List<ReplyVO> replies = replyService.getRepliesPaging(articleNo, criteria);
+            int repliesCount = replyService.countReplies(articleNo);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+            pageMaker.setTotalCount(repliesCount);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("replies", replies);
+            map.put("pageMake", pageMaker);
+
+            entity = new ResponseEntity<>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.OK);
+
+        }
+
+        return entity;
+    }
+
+
 }
 

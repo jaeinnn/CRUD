@@ -43,15 +43,15 @@ public class ArticleDAOTest {
     @Test
     public void testUpdate() throws Exception {
         ArticleVO article = new ArticleVO();
-        article.setArticleNo(1);
-        article.setTitle("글 수정 테스트 제목");
-        article.setContent("글 수정 테스트 내용");
+        article.setArticleNo(2025);
+        article.setTitle("업뎃테스트...");
+        article.setContent("얘는 잘 되는거같은데?");
         articleDAO.update(article);
     }
 
     @Test
     public void testDelete() throws Exception{
-        articleDAO.delete(1);
+        articleDAO.delete(983);
     }
 
     @Test

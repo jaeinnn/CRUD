@@ -47,7 +47,9 @@ public class ReplyDAOTest {
 
         ReplyVO replyVO = new ReplyVO();
         replyVO.setArticleNo(1022);
-        replyVO.setReplyText(2+"번째 댓글 수정...");
+        replyVO.setReplyNo(6);
+        replyVO.setReplyText("댓글 수정...");
+        replyVO.setReplyWriter("댓글작성자");
         replyDAO.update(replyVO);
 
     }
@@ -55,7 +57,7 @@ public class ReplyDAOTest {
     @Test
     public void testReplyDelete() throws Exception {
 
-        replyDAO.delete(1);
+        replyDAO.delete(2);
 
     }
 

@@ -39,11 +39,21 @@ public class ReplyController {
     }
 
     @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
+    @ResponseBody
     public ResponseEntity<List<ReplyVO>> list(@PathVariable("articleNo") Integer articleNo) {
         ResponseEntity<List<ReplyVO>> entity = null;
+        System.out.println("왔니...?");
         try {
+
+            System.out.println("왔으면 대답을 해줘...");
             entity = new ResponseEntity<>(replyService.listReply(articleNo), HttpStatus.OK);
+
+
+            System.out.println(replyService.listReply(articleNo));
+
+
         } catch (Exception e) {
+            System.out.println("안왔으면 말구...");
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -112,7 +122,6 @@ public class ReplyController {
 
         return entity;
     }
-
 
 }
 

@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <script>
+
+        <%--
         $(document).ready(function(){
 
             console.log("왜 안나오지?");
@@ -31,6 +33,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     console.log("응답이 완료하였습니다.");
                 });
         });
+        --%>
+
+        var articleNo = 1022;
+
+        // 댓글 목록 호출
+        getReplies();
+
+        // 댓글 목록 출력 함수
+        function getReplies() {
+
+            $.getJSON("/replies/all/" + articleNo, function (data) {
+
+                console.log(data);
+
+                var str = "";
+
+                $(data).each(function () {
+                    str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
+                        +   "<p class='replyText'>" + this.replyText + "</p>"
+                        +   "<p class='replyWriter'>" + this.replyWriter + "</p>"
+                        +   "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                        + "</li>"
+                        + "<hr/>";
+
+                });
+
+                $("#replies").html(str);
+
+            });
+
+            }
+
 
     </script>
 </head>

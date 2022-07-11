@@ -4,6 +4,7 @@ import com.mvc.commons.paging.Criteria;
 import com.mvc.commons.paging.PageMaker;
 import com.mvc.reply.domain.ReplyVO;
 import com.mvc.reply.service.ReplyService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,12 +26,28 @@ public class ReplyController {
         this.replyService = replyService;
     }
 
+    /*
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<String> m13() {
+        System.out.println("컨트롤러 타기... 테스트...");
+        String msg = "{\"name\":\"김재인\", \"age\":20}"; //json
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=utf-8");
+        System.out.println("변환이 잘 됐을까...?");
+        System.out.println(msg);
+        return new ResponseEntity<>(msg, headers, HttpStatus.OK);
+    }
+
+     */
+
+
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
         ResponseEntity<String> entity = null;
         try {
             replyService.addReply(replyVO);
             entity = new ResponseEntity<>("regSuccess", HttpStatus.OK);
+
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -38,18 +55,21 @@ public class ReplyController {
         return entity;
     }
 
+
     @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<ReplyVO>> list(@PathVariable("articleNo") Integer articleNo) {
         ResponseEntity<List<ReplyVO>> entity = null;
+   //     HttpHeaders headers = new HttpHeaders();
+   //     headers.add("Content-Type", "application/json;charset=utf-8");
+
         System.out.println("왔니...?");
         try {
 
             System.out.println("왔으면 대답을 해줘...");
             entity = new ResponseEntity<>(replyService.listReply(articleNo), HttpStatus.OK);
 
-
-            System.out.println(replyService.listReply(articleNo));
+            //System.out.println(replyService.listReply(articleNo));
+            System.out.println(entity);
 
 
         } catch (Exception e) {
@@ -59,6 +79,23 @@ public class ReplyController {
         }
         return entity;
     }
+
+
+    /*
+    @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
+    public ResponseEntity<String> m13() {
+        System.out.println("컨트롤러 타기... 테스트...");
+        String msg = "{\"name\":\"김재인\", \"age\":20}"; //json
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;charset=utf-8");
+        System.out.println("변환이 잘 됐을까...?");
+        System.out.println(msg);
+        return new ResponseEntity<>(msg, headers, HttpStatus.OK);
+    }
+
+     */
+
+    /*
 
     @RequestMapping(value = "/{replyNo}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> update(@PathVariable("replyNo") Integer replyNo, @RequestBody ReplyVO replyVO) {
@@ -73,6 +110,8 @@ public class ReplyController {
         }
         return entity;
     }
+
+     */
 
     @RequestMapping(value = "/{replyNo}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable("replyNo") Integer replyNo) {
@@ -109,7 +148,7 @@ public class ReplyController {
 
             Map<String, Object> map = new HashMap<>();
             map.put("replies", replies);
-            map.put("pageMake", pageMaker);
+            map.put("pageMaker", pageMaker);
 
             entity = new ResponseEntity<>(map, HttpStatus.OK);
 
@@ -124,4 +163,3 @@ public class ReplyController {
     }
 
 }
-

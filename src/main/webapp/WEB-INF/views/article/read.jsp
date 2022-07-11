@@ -13,6 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
+
     <script id="replyTemplate" type="text/x-handlebars-template">
         {{#each.}}
         <div class="post replyDiv" data-replyNo={{replyNo}}>
@@ -33,7 +34,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <br/>
         </div>
         {{/each}}
+
     </script>
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -149,6 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
         </div>
 
+
         <!--댓글 목록/페이징 영역-->
         <div class="box box-success collapsed-box">
             <%--댓글 유무 / 댓글 갯수 / 댓글 펼치기, 접기--%>
@@ -177,6 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <%--댓글 수정 modal 영역 --%>
         <%--댓글 수정 modal 영역--%>
+
         <div class="modal fade" id="modModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -221,6 +226,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
 
 
+
+
     </div>
     <!-- /.content-wrapper -->
 
@@ -250,11 +257,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="../include/dist/js/adminlte.min.js"></script>
 
-
-
-
 <script>
-    <!--댓글목록 js코드-->
+
     $(document).ready(function () {
 
         var articleNo = "${article.articleNo}";  // 현재 게시글 번호
@@ -349,109 +353,112 @@ scratch. This page gets rid of all links and provides the needed markup only.
             replyPageNum = $(this).attr("href");
             getReplies("/replies/" + articleNo + "/" + replyPageNum);
         });
-    });
-
-    <!--댓글 등록 js-->
-    // 댓글 저장 버튼 클릭 이벤트
-    $(".replyAddBtn").on("click", function () {
-
-        var articleNo = "${article.articleNo}";  // 현재 게시글 번호
-        var replyPageNum = 1; // 댓글 페이지 번호 초기화
-
-        // 입력 form 선택자
-        var replyWriterObj = $("#newReplyWriter");
-        var replyTextObj = $("#newReplyText");
-        var replyWriter = replyWriterObj.val();
-        var replyText = replyTextObj.val();
-
-        // 댓글 입력처리 수행
-        $.ajax({
-            type : "post",
-            url : "/replies/",
-            contentType : "application/json; charset=utf-8", //test중
-            dataType : "text", //text? string?
-            data : JSON.stringify({
-                "articleNo" : "articleNo",
-                "replyWriter" : "replyWriter",
-                "replyText" : "replyText"
-            }),
-
-            success: function (result) {
-                console.log("result : " + result);
-                if (result === "regSuccess") {
-                    alert("댓글이 등록되었습니다.");
-                    replyPageNum = 1;  // 페이지 1로 초기화
-                    getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
-                    replyTextObj.val("");   // 댓글 입력창 공백처리
-                    replyWriterObj.val("");   // 댓글 입력창 공백처리
-                }else{{
-                    console.log("댓글 등록 실패ㅠㅠ")
-                }}
-            }
-        });
-    });
 
 
-    // 댓글 수정을 위해 modal창에 선택한 댓글의 값들을 세팅
-    $(".repliesDiv").on("click", ".replyDiv", function (event) {
-        var reply = $(this);
-        $(".replyNo").val(reply.attr("data-replyNo"));
-        $("#replyText").val(reply.find(".oldReplyText").text());
-    });
 
-    // modal 창의 댓글 수정버튼 클릭 이벤트
-    $(".modalModBtn").on("click", function () {
-        var replyNo = $(".replyNo").val();
-        var replyText = $("#replyText").val();
-        $.ajax({
-            type : "put",
-            url : "/replies/" + replyNo,
-            headers : {
-                "Content-Type" : "application/json",
-                "X-HTTP-Method-Override" : "PUT"
-            },
-            dataType : "text",
-            data: JSON.stringify({
-                replyText : replyText
-            }),
-            success: function (result) {
-                console.log("result : " + result);
-                if (result === "modSuccess") {
-                    alert("댓글이 수정되었습니다.");
-                    getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
-                    $("#modModal").modal("hide"); // modal 창 닫기
+
+        // 댓글 저장 버튼 클릭 이벤트
+        $(".replyAddBtn").on("click", function () {
+
+            // 입력 form 선택자
+            var replyWriterObj = $("#newReplyWriter");
+            var replyTextObj = $("#newReplyText");
+            var replyWriter = replyWriterObj.val();
+            var replyText = replyTextObj.val();
+
+            // 댓글 입력처리 수행
+            $.ajax({
+                type : "post",
+                url : "/replies/",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "POST"
+                },
+                dataType : "text",
+                data : JSON.stringify({
+                    articleNo : articleNo,
+                    replyWriter : replyWriter,
+                    replyText : replyText
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result === "regSuccess") {
+                        alert("댓글이 등록되었습니다.");
+                        replyPageNum = 1;  // 페이지 1로 초기화
+                        getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
+                        replyTextObj.val("");   // 댓글 입력창 공백처리
+                        replyWriterObj.val("");   // 댓글 입력창 공백처리
+                    }
                 }
-            }
-        })
-    });
-
-
-    //js 댓글 수정/삭제 이벤트처리
-    // modal 창의 댓글 삭제버튼 클릭 이벤트
-    $(".modalDelBtn").on("click", function () {
-        var replyNo = $(".replyNo").val();
-        $.ajax({
-            type: "delete",
-            url: "/replies/" + replyNo,
-            headers: {
-                "Content-Type" : "application/json",
-                "X-HTTP-Method-Override" : "DELETE"
-            },
-            dataType: "text",
-            success: function (result) {
-                console.log("result : " + result);
-                if (result === "delSuccess") {
-                    alert("댓글이 삭제되었습니다.");
-                    getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
-                    $("#delModal").modal("hide"); // modal 창 닫기
-                }
-            }
+            });
         });
+
+
+
+
+        // 댓글 수정을 위해 modal창에 선택한 댓글의 값들을 세팅
+        $(".repliesDiv").on("click", ".replyDiv", function (event) {
+            var reply = $(this);
+            $(".replyNo").val(reply.attr("data-replyNo"));
+            $("#replyText").val(reply.find(".oldReplyText").text());
+        });
+
+// modal 창의 댓글 수정버튼 클릭 이벤트
+        $(".modalModBtn").on("click", function () {
+
+           console.log("불러도 대답없는 너..");
+
+            var replyNo = $(".replyNo").val();
+            var replyText = $("#replyText").val();
+            $.ajax({
+                type : "put",
+                url : "/replies/" + replyNo,
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "PUT"
+                },
+                dataType : "text",
+                data: JSON.stringify({
+                    replyText : replyText
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result === "modSuccess") {
+                        alert("댓글이 수정되었습니다.");
+                        getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
+                        $("#modModal").modal("hide"); // modal 창 닫기
+                    }
+                }
+            })
+        });
+
+// modal 창의 댓글 삭제버튼 클릭 이벤트
+        $(".modalDelBtn").on("click", function () {
+            var replyNo = $(".replyNo").val();
+            $.ajax({
+                type: "delete",
+                url: "/replies/" + replyNo,
+                headers: {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "DELETE"
+                },
+                dataType: "text",
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result === "delSuccess") {
+                        alert("댓글이 삭제되었습니다.");
+                        getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
+                        $("#delModal").modal("hide"); // modal 창 닫기
+                    }
+                }
+            });
+        });
+
+
+
     });
 
 </script>
-
-
 
 
 

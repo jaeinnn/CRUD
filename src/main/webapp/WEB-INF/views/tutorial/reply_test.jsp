@@ -65,7 +65,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             }
 
-
     </script>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -199,6 +198,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="../include/dist/js/adminlte.min.js"></script>
 
+<script>
+
+    $("#replies").on("click", ".replyLi button", function () {
+        var reply = $(this).parent();
+
+        var replyNo = reply.attr("data-replyNo");
+        var replyText = reply.find(".replyText").text();
+        var replyWriter = reply.find(".replyWriter").text();
+
+        $("#replyNo").val(replyNo);
+        $("#replyText").val(replyText);
+        $("#replyWriter").val(replyWriter);
+
+    });
+
+
+</script>
 
 </body>
 </html>

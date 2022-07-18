@@ -95,7 +95,7 @@ public class ReplyController {
 
      */
 
-    /*
+
 
     @RequestMapping(value = "/{replyNo}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> update(@PathVariable("replyNo") Integer replyNo, @RequestBody ReplyVO replyVO) {
@@ -111,7 +111,7 @@ public class ReplyController {
         return entity;
     }
 
-     */
+
 
     @RequestMapping(value = "/{replyNo}", method = RequestMethod.DELETE)
     public ResponseEntity<String> delete(@PathVariable("replyNo") Integer replyNo) {

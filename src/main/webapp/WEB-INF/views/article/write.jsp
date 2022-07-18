@@ -9,6 +9,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
 
     <%@ include file="../include/head.jsp"%>
+    <%@ include file="../include/plugin_js.jsp"%>
+
+    <style type="text/css">
+        .fileDrop {
+            width: 100%;
+            height: 200px;
+            border: 2px dotted #0b58a2;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
+    <script src="/static/js/lib/jquery.cookie/jquery.cookie.js"></script>
+
+    <script id="fileTemplate" type="text/x-handlebars-template">
+        <li>
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+            <div class="mailbox-attachment-info">
+                <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                    <i class="fa fa-paperclip"></i> {{originalFileName}}
+                </a>
+                <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">
+                    <i class="fa fa-fw fa-remove"></i>
+                </a>
+            </div>
+        </li>
+    </script>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -85,6 +115,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                               placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
                                 </div>
 
+                                <%--첨부파일 영역 추가--%>
+                                <div class="form-group">
+                                    <div class="fileDrop">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
+                                    </div>
+                                </div>
+                                <%--첨부파일 영역 추가--%>
+
                             </div>
                             <div class="box-footer">
                                 <button type="button" onclick="location.href='${path}/article/list';" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
@@ -126,6 +168,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="../include/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../include/dist/js/adminlte.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+    // 게시글 저장 버튼 클릭 이벤트 처리
+    $("#writeForm").submit(function (event) {
+        event.preventDefault();
+        var that = $(this);
+        filesSubmit(that);
+    });
+
+    // 파일 삭제 버튼 클릭 이벤트
+    $(document).on("click", ".delBtn", function (event) {
+        event.preventDefault();
+        var that = $(this);
+        deleteFileWrtPage(that);
+    });
+
+    });
+
+
+</script>
+
 
 </body>
 </html>

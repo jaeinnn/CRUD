@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <td>${article.articleNo}</td>
                                     <%--<td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>--%>
                                     <%--<td><a href="${path}/article/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td> --%>
-                                        <td><a href="${path}/article/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
+                                        <td><a href="${path}/article/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a><span class="badge bg-teal"><i class="fa fa-comment-o"></i> + ${article.replyCnt}</span></td>
                                         <td>${article.writer}</td>
                                         <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                         <td><span class="badge bg-red">${article.viewCnt}</span></td>

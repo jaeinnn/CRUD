@@ -8,11 +8,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
 
-    <%@ include file="../include/head.jsp"%>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
+    <script src="/plugins/jquery/jquery.js"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+    <!--Handlebar라이브러리 추가-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+    <script src="/static/js/lib/jquery.cookie/jquery.cookie.js"></script>
 
     <script id="replyTemplate" type="text/x-handlebars-template">
         {{#each.}}
@@ -36,6 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {{/each}}
 
     </script>
+
+
 
 
 </head>
@@ -180,8 +198,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
         <%--댓글 수정 modal 영역 --%>
-        <%--댓글 수정 modal 영역--%>
-
         <div class="modal fade" id="modModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -256,6 +272,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="../include/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../include/dist/js/adminlte.min.js"></script>
+
 
 <script>
 
@@ -403,7 +420,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $("#replyText").val(reply.find(".oldReplyText").text());
         });
 
-// modal 창의 댓글 수정버튼 클릭 이벤트
+        // modal 창의 댓글 수정버튼 클릭 이벤트
         $(".modalModBtn").on("click", function () {
 
            console.log("불러도 대답없는 너..");
@@ -429,7 +446,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $("#modModal").modal("hide"); // modal 창 닫기
                     }
                 }
-            })
+            }).done(function(){
+                console.log("요청이 성공하였습니다.");
+            }).fail(function(){
+                console.log("알수없는 에러가 발생하였습니다.");
+            }).always(function(){
+                console.log("응답이 완료하였습니다.");
+            });
+
         });
 
 // modal 창의 댓글 삭제버튼 클릭 이벤트
@@ -459,7 +483,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 
 </script>
-
 
 
 </body>

@@ -3,8 +3,11 @@ package com.mvc.service;
 import com.mvc.commons.paging.Criteria;
 import com.mvc.commons.paging.SearchCriteria;
 import com.mvc.dao.ArticleDAO;
+import com.mvc.dao.ArticleFileDAO;
 import com.mvc.domain.ArticleVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -12,23 +15,38 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService{
 
-  //  @Inject
     private final ArticleDAO articleDAO;
+    private final ArticleFileDAO articleFileDAO;
 
     @Inject
-    public ArticleServiceImpl(ArticleDAO articleDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
         this.articleDAO = articleDAO;
+        this.articleFileDAO = articleFileDAO;
     }
 
 
+    @Transactional
     @Override
     public void create(ArticleVO articleVO) throws Exception {
+
+        // 게시글 입력처리
         articleDAO.create(articleVO);
+        String[] files = articleVO.getFiles();
+
+        if (files == null)
+            return;
+
+        // 게시글 첨부파일 입력처리
+        for (String fileName : files)
+            articleFileDAO.addFile(fileName);
+
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ArticleVO read(Integer articleNO) throws Exception {
-        return articleDAO.read(articleNO);
+      articleDAO.updateViewCnt(articleNO);
+       return articleDAO.read(articleNO);
     }
 
     @Override

@@ -8,14 +8,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
 
+    <script src="/plugins/jquery/jquery.js"></script>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
-
-    <script src="/plugins/jquery/jquery.js"></script>
 
     <!-- Bootstrap 4 -->
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -27,7 +27,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+   <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
     <script src="/static/js/lib/jquery.cookie/jquery.cookie.js"></script>
 
     <script id="replyTemplate" type="text/x-handlebars-template">
@@ -51,6 +51,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         {{/each}}
 
+    </script>
+
+
+
+    <script id="fileTemplate" type="text/x-handlebars-template">
+        <li data-src="{{fullName}}">
+        <span class="mailbox-attachment-icon has-img">
+            <img src="{{imgSrc}}" alt="Attachment">
+        </span>
+            <div class="mailbox-attachment-info">
+                <a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+                    <i class="fa fa-paperclip"></i> {{originalFileName}}
+                </a>
+            </div>
+        </li>
     </script>
 
 
@@ -96,6 +111,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="box-body" style="height: 700px">
                             ${article.content}
                         </div>
+
+
+
+                        <%--업로드 파일 정보 영역--%>
+                        <div class="box-footer uploadFiles">
+                            <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
+                        </div>
+                        <%--업로드 파일 정보 영역--%>
+
+
+
                         <div class="box-footer">
                             <div class="user-block">
                                 <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
@@ -267,7 +293,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="../include/plugins/jquery/jquery.min.js"></script>
+<!--<script src="../include/plugins/jquery/jquery.min.js"></script>-->
 <!-- Bootstrap 4 -->
 <script src="../include/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
@@ -483,6 +509,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 
 </script>
+
+<script>
+    // 현재 게시글 번호
+    var articleNo = "${article.articleNo}";
+    // 첨부파일 목록
+    getFiles(articleNo);
+</script>
+
+<script>
+
+    // 게시글 삭제 클릭 이벤트
+    $(".delBtn").on("click", function () {
+
+        // 댓글이 달린 게시글 삭제처리 방지
+        var replyCnt = $(".replyDiv").length;
+        if (replyCnt > 0) {
+            alert("댓글이 달린 게시글은 삭제할수 없습니다.");
+            return;
+        }
+
+        // 첨부파일명들을 배열에 저장
+        var arr = [];
+        $(".uploadedFileList li").each(function () {
+            arr.push($(this).attr("data-src"));
+        });
+
+        // 첨부파일 삭제요청
+        if (arr.length > 0) {
+            $.post("/article/file/deleteAll", {files: arr}, function () {
+
+            });
+        }
+
+        // 삭제처리
+        formObj.attr("action", "/article/paging/search/remove");
+        formObj.submit();
+    });
+
+</script>
+
 
 
 </body>

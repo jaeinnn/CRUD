@@ -13,8 +13,7 @@
 <!--Handlebar라이브러리 추가-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 
-<%--lightbox js--%>
-<script src="/components/lightbox/js/lightbox.js"></script>
+
 <link rel="stylesheet" href="${path}/plugins/ekko-lightbox/ekko-lightbox.css">
 
 

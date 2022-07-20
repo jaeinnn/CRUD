@@ -16,8 +16,6 @@
 <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 
 
-<%--lightbox css--%>
-<link rel="stylesheet" href="/components/lightbox/css/lightbox.css">
 
 <link rel="stylesheet" href="${path}/plugins/ekko-lightbox/ekko-lightbox.css">
 <script src="${path}/plugins/ekko-lightbox/ekko-lightbox.js"></script>

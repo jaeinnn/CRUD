@@ -3,7 +3,7 @@ package com.mvc.service;
 import com.mvc.commons.paging.Criteria;
 import com.mvc.commons.paging.SearchCriteria;
 import com.mvc.dao.ArticleDAO;
-import com.mvc.dao.ArticleFileDAO;
+import com.mvc.upload.Persistence.ArticleFileDAO;
 import com.mvc.domain.ArticleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -54,8 +54,10 @@ public class ArticleServiceImpl implements ArticleService{
         articleDAO.update(articleVO);
     }
 
+    @Transactional
     @Override
     public void delete(Integer articleNo) throws Exception {
+        articleFileDAO.deleteFiles(articleNo);
         articleDAO.delete(articleNo);
     }
 

@@ -30,6 +30,9 @@ fileDropDiv.on("drop", function (event) {
 
 // 파일 업로드 AJAX 통신
 function uploadFile(formData) {
+
+    console.log("첨부파일 드래그하기!");
+
     $.ajax({
         url: "/article/file/upload",
         data: formData,
@@ -86,6 +89,9 @@ function deleteFileWrtPage(that) {
 
 // 파일 삭제 AJAX 통신
 function deleteFile(url, that) {
+
+    console.log("첨부파일 삭제하기!");
+
     $.ajax({
         url: url,
         type: "post",
@@ -116,7 +122,7 @@ function getFileInfo(fullName) {
         // 원본 이미지 요청 링크
         originalFileUrl = "/article/file/display?fileName=" + originalImg;
     } else {
-        imgSrc = "/resources/upload/files/file-icon.png"; // 파일 아이콘 이미지 링크
+        imgSrc = "/dist/upload/files/file-icon.png"; // 파일 아이콘 이미지 링크
         uuidFileName = fullName.substr(12);
         // 파일 다운로드 요청 링크
         originalFileUrl = "/article/file/display?fileName=" + fullName;
@@ -130,4 +136,17 @@ function getFileInfo(fullName) {
 function checkImageType(fullName) {
     var pattern = /jpg$|gif$|png$|jpge$/i;
     return fullName.match(pattern);
+}
+
+
+// 파일 목록 : 게시글 조회, 수정페이지
+function getFiles(articleNo) {
+    $.getJSON("/article/file/list/" + articleNo, function (list) {
+        if (list.length === 0) {
+            $(".uploadedFileList").html("<span class='noAttach'>첨부파일이 없습니다.</span>");
+        }
+        $(list).each(function () {
+            printFiles(this);
+        })
+    });
 }

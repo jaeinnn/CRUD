@@ -1,37 +1,33 @@
-package com.mvc.controller;
+package com.mvc.upload.controller;
 
 import com.mvc.commons.util.UploadFileUtils;
-import com.mvc.service.ArticleService;
+import com.mvc.upload.service.ArticleFileService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/article/file")
 public class ArticleFileController {
 
 
-  //  private final ArticleFileService articleFileService;
+    private final ArticleFileService articleFileService;
 
-    /*
-    private final ArticleService articleService;
 
     @Inject
-    public ArticleFileController(ArticleService articleService) {
-        this.articleService = articleService;
+    public ArticleFileController(ArticleFileService articleFileService) {
+        this.articleFileService = articleFileService;
     }
 
-     */
 
 
     // 게시글 파일 업로드
@@ -75,6 +71,41 @@ public class ArticleFileController {
 
         try {
             UploadFileUtils.deleteFile(fileName, request);
+            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+
+    // 게시글 첨부 파일 목록
+    @RequestMapping(value = "/list/{articleNo}", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getFiles(@PathVariable("articleNo") Integer articleNo) {
+        ResponseEntity<List<String>> entity = null;
+        try {
+            List<String> fileList = articleFileService.getArticleFiles(articleNo);
+            entity = new ResponseEntity<>(fileList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    // 게시글 파일 전체 삭제
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteAllFiles(@RequestParam("files[]") String[] files, HttpServletRequest request) {
+
+        if (files == null || files.length == 0)
+            return new ResponseEntity<>("DELETED", HttpStatus.OK);
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            for (String fileName : files)
+                UploadFileUtils.deleteFile(fileName, request);
             entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

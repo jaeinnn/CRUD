@@ -8,8 +8,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
 
-    <%@ include file="../include/head.jsp"%>
-    <%@ include file="../include/plugin_js.jsp"%>
+    <script src="/plugins/jquery/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <!--Handlebar라이브러리 추가-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
+
+    <%--lightbox css--%>
+    <link rel="stylesheet" href="/components/lightbox/css/lightbox.css">
+
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+
 
     <style type="text/css">
         .fileDrop {
@@ -19,10 +38,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
     </style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script type="text/javascript" src="/resources/dist/js/article_file_upload.js"></script>
+
     <script src="/static/js/lib/jquery.cookie/jquery.cookie.js"></script>
+
 
     <script id="fileTemplate" type="text/x-handlebars-template">
         <li>
@@ -39,6 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
         </li>
     </script>
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -128,6 +147,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <%--첨부파일 영역 추가--%>
 
                             </div>
+
+                            <div class="box-footer">
+                                <ul class="mailbox-attachments clearfix uploadedFileList"></ul>
+                            </div>
+
                             <div class="box-footer">
                                 <button type="button" onclick="location.href='${path}/article/list';" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
                                 <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i> 초기화</button>
@@ -163,11 +187,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
+
+<!--
 <script src="../include/plugins/jquery/jquery.min.js"></script>
+-->
 <!-- Bootstrap 4 -->
-<script src="../include/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <!-- AdminLTE App -->
-<script src="../include/dist/js/adminlte.min.js"></script>
+<script src="/dist/js/adminlte.js"></script>
+
+<%--lightbox js--%>
+<script src="/components/lightbox/js/lightbox.js"></script>
+
+<script type="text/javascript" src="/dist/js/article_file_upload.js"></script>
+
+
+
 
 <script>
 

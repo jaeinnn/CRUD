@@ -48,6 +48,7 @@ public class ArticleController {
         logger.info(articleVO.toString());
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg","regSuccess");
+        System.out.println("##><");
 
         return "redirect:/article/listPaging";
     }

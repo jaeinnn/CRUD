@@ -44,13 +44,16 @@ public class ReplyController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
         ResponseEntity<String> entity = null;
+        System.out.println("댓글 등록하기 컨트롤러");
         try {
             replyService.addReply(replyVO);
             entity = new ResponseEntity<>("regSuccess", HttpStatus.OK);
+            System.out.println("댓글 등록 AJAX 성공");
 
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            System.out.println("댓글 등록 AJAX 실패");
         }
         return entity;
     }
@@ -59,8 +62,9 @@ public class ReplyController {
     @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
     public ResponseEntity<List<ReplyVO>> list(@PathVariable("articleNo") Integer articleNo) {
         ResponseEntity<List<ReplyVO>> entity = null;
-   //     HttpHeaders headers = new HttpHeaders();
-   //     headers.add("Content-Type", "application/json;charset=utf-8");
+
+    //    HttpHeaders headers = new HttpHeaders();
+    //    headers.add("Content-Type", "application/json;charset=utf-8");
 
         System.out.println("왔니...?");
         try {

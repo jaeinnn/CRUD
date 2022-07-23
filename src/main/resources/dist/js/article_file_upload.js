@@ -16,6 +16,11 @@ fileDropDiv.on("dragenter dragover", function (event) {
 
 // 첨부파일 drag & drop 이벤트 처리 : 파일업로드 처리 -> 파일 출력
 fileDropDiv.on("drop", function (event) {
+
+
+    console.log("파일 드래그처리하기...");
+
+
     event.preventDefault();
     // drop 이벤트 발생시 전달된 파일 데이터
     var files = event.originalEvent.dataTransfer.files;
@@ -30,11 +35,13 @@ fileDropDiv.on("drop", function (event) {
 
 // 파일 업로드 AJAX 통신
 function uploadFile(formData) {
-
-    console.log("첨부파일 드래그하기!");
-
+  //  var url = "/article/file/testlol";
+  //  alert(formData);
+  //  alert(url);
     $.ajax({
+
         url: "/article/file/upload",
+      //  url: url,
         data: formData,
         dataType: "text",
         // processData : 데이터를 일반적인 query string으로 변환처리할 것인지 결정
@@ -47,6 +54,10 @@ function uploadFile(formData) {
         type: "POST",
         success: function (data) {
             printFiles(data); // 첨부파일 출력 메서드 호출
+
+            console.log("####################################");
+            console.log("data 출력:" + data);
+
             $(".noAttach").remove();
         }
     });
@@ -83,12 +94,16 @@ function filesSubmit(that) {
 
 // 파일 삭제(입력페이지) : 첨부파일만 삭제처리
 function deleteFileWrtPage(that) {
+    alert("뭐냐 왜이래...;;;");
     var url = "/article/file/delete";
     deleteFile(url, that);
 }
 
 // 파일 삭제 AJAX 통신
 function deleteFile(url, that) {
+
+    alert(url);
+    alert(that);
 
     console.log("첨부파일 삭제하기!");
 
@@ -114,14 +129,22 @@ function getFileInfo(fullName) {
     var originalFileUrl;    // 원본파일 요청 URL
     var uuidFileName;       // 날짜경로를 제외한 나머지 파일명 (UUID_파일명.확장자)
 
+    console.log("파일 업로드..." + fullName);
+
     // 이미지 파일이면
     if (checkImageType(fullName)) {
+
+        console.log("이미지파일 업로드");
+
         imgSrc = "/article/file/display?fileName=" + fullName; // 썸네일 이미지 링크
         uuidFileName = fullName.substr(14);
         var originalImg = fullName.substr(0, 12) + fullName.substr(14);
         // 원본 이미지 요청 링크
         originalFileUrl = "/article/file/display?fileName=" + originalImg;
     } else {
+
+        console.log("이미지아닌 파일......");
+
         imgSrc = "/dist/upload/files/file-icon.png"; // 파일 아이콘 이미지 링크
         uuidFileName = fullName.substr(12);
         // 파일 다운로드 요청 링크

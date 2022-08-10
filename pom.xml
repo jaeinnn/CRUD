@@ -299,9 +299,14 @@
             <version>4.2</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.19.1</version>
+        </dependency>
 
     </dependencies>
-
 
     <build>
         <plugins>
@@ -316,6 +321,7 @@
                 <showDeprecation>true</showDeprecation>
             </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -324,6 +330,13 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+
         </plugins>
     </build>
 

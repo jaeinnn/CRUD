@@ -310,6 +310,27 @@
     </dependencies>
 
     <build>
+
+
+            <resources>
+                <resource>
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>**/*.png</include>
+                        <include>**/*.css</include>
+                        <include>**/*.js</include>
+                        <include>**/*.gif</include>
+                        <include>**/*.md</include>
+                        <include>**/*.json</include>
+                        <include>**/*.xml</include>
+                        <include>/*.xml</include>
+                        <include>/*.properties</include>
+                        <include>/*.png</include>
+                    </includes>
+                </resource>
+            </resources>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
